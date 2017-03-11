@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.2.11
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 11, 2017 at 05:15 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: 11 Mar 2017 pada 21.07
+-- Versi Server: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `ider`
@@ -23,22 +23,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_item`
+-- Struktur dari tabel `detail_item`
 --
 
-CREATE TABLE `detail_item` (
+CREATE TABLE IF NOT EXISTS `detail_item` (
   `Id_pesanan` varchar(50) NOT NULL,
   `Item` varchar(50) NOT NULL,
-  `Jumlah` varchar(50) NOT NULL
+  `Jumlah` varchar(50) NOT NULL,
+  `id_pedagang` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `detail_item`
+--
+
+INSERT INTO `detail_item` (`Id_pesanan`, `Item`, `Jumlah`, `id_pedagang`) VALUES
+('1', 'Bakso lengkap campur', '1', 'cakkhoir87'),
+('2', 'Pentol Kasar Besar', '1', 'cakkhoir87');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `komentar`
+-- Struktur dari tabel `komentar`
 --
 
-CREATE TABLE `komentar` (
+CREATE TABLE IF NOT EXISTS `komentar` (
   `Id_user_pelanggan` varchar(50) NOT NULL,
   `Komentar` varchar(50) NOT NULL,
   `Id_user_pedagang` varchar(50) NOT NULL,
@@ -48,10 +57,10 @@ CREATE TABLE `komentar` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pedagang`
+-- Struktur dari tabel `pedagang`
 --
 
-CREATE TABLE `pedagang` (
+CREATE TABLE IF NOT EXISTS `pedagang` (
   `Id_pelanggan` varchar(50) NOT NULL,
   `Status` varchar(50) NOT NULL,
   `Pesanan` varchar(50) NOT NULL,
@@ -59,14 +68,21 @@ CREATE TABLE `pedagang` (
   `Longitude` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `pedagang`
+--
+
+INSERT INTO `pedagang` (`Id_pelanggan`, `Status`, `Pesanan`, `Latitude`, `Longitude`) VALUES
+('cakkhoir87', 'Bakso enak mantap murah nikmat', 'null', '55,55', '55,55');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pesanan`
+-- Struktur dari tabel `pesanan`
 --
 
-CREATE TABLE `pesanan` (
-  `Id_pesanan` int(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pesanan` (
+`Id_pesanan` int(50) NOT NULL,
   `Id_user` varchar(50) NOT NULL,
   `Nama_user` varchar(50) NOT NULL,
   `Total_harga` varchar(50) NOT NULL
@@ -75,20 +91,20 @@ CREATE TABLE `pesanan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
-CREATE TABLE `user` (
-  `Id_user` int(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user` (
+`Id_user` int(50) NOT NULL,
   `Nama` varchar(50) NOT NULL,
   `Password` varchar(50) NOT NULL,
   `Level` varchar(50) DEFAULT NULL,
   `Alamat` varchar(50) NOT NULL,
   `Photo` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`Id_user`, `Nama`, `Password`, `Level`, `Alamat`, `Photo`) VALUES
@@ -103,25 +119,25 @@ INSERT INTO `user` (`Id_user`, `Nama`, `Password`, `Level`, `Alamat`, `Photo`) V
 -- Indexes for table `detail_item`
 --
 ALTER TABLE `detail_item`
-  ADD PRIMARY KEY (`Id_pesanan`);
+ ADD PRIMARY KEY (`Id_pesanan`), ADD KEY `id_pedagang` (`id_pedagang`);
 
 --
 -- Indexes for table `pedagang`
 --
 ALTER TABLE `pedagang`
-  ADD PRIMARY KEY (`Id_pelanggan`);
+ ADD PRIMARY KEY (`Id_pelanggan`);
 
 --
 -- Indexes for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  ADD PRIMARY KEY (`Id_pesanan`);
+ ADD PRIMARY KEY (`Id_pesanan`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`Id_user`);
+ ADD PRIMARY KEY (`Id_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -131,12 +147,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `Id_pesanan` int(50) NOT NULL AUTO_INCREMENT;
+MODIFY `Id_pesanan` int(50) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id_user` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `Id_user` int(50) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
